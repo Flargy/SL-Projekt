@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        //playerPosition.position += direction * movementSpeed;
         rb.velocity = direction;
     }
 

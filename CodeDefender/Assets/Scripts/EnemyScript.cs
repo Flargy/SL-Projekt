@@ -8,11 +8,15 @@ public class EnemyScript : MonoBehaviour
     public bool playerLocated = false;
     public GameObject player;
     public GameObject fightTrigger;
+    [SerializeField] private float timeToDestroy = 0;
+    [SerializeField] private bool isRanged = false;
+    [SerializeField] private GameObject bullet;
 
     private NavMeshAgent agent;
     private float followDelay = 0;
     private float attackDelay;
     private bool canAttack = true;
+    private bool isDead = false;
 
     void Start()
     {
@@ -22,12 +26,16 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerLocated)
+        if (playerLocated && isDead == false)
         {
             if(canAttack == false)
             {
                 attackDelay += Time.deltaTime;
-                if(attackDelay >= 1.5f)
+                if(attackDelay >= 1.5f && isRanged == false)
+                {
+                    canAttack = true;
+                }
+                else if (attackDelay >= 4.0f && isRanged == true)
                 {
                     canAttack = true;
                 }
@@ -40,7 +48,7 @@ public class EnemyScript : MonoBehaviour
                 followDelay = 0.0f;
             }
             
-            if (CheckRemainingDistance(player.transform.position, 1.0f))
+            if (CheckRemainingDistance(player.transform.position, 1.0f) && isRanged == false)
             {
                 if (canAttack == true)
                 {
@@ -50,18 +58,36 @@ public class EnemyScript : MonoBehaviour
                 }
 
             }
+
+            else if(CheckRemainingDistance(player.transform.position, 15f) && isRanged == true)
+            {
+                if (canAttack == true)
+                {
+                    transform.LookAt(player.transform.position);
+                    ShootPlayer();
+                    canAttack = false;
+                    attackDelay = 0.0f;
+                }
+            }
         }
         
     }
 
     public void Die()
     {
+        isDead = true;
+        agent.isStopped = true;
         fightTrigger.GetComponent<FightTrigger>().RemoveEnemy(gameObject);
-        Destroy(gameObject);
+        Destroy(gameObject, timeToDestroy);
     }
 
     private bool CheckRemainingDistance(Vector3 destination, float acceptableRange)
     {
         return (destination - transform.position).sqrMagnitude < acceptableRange * acceptableRange;
+    }
+
+    private void ShootPlayer()
+    {
+        Instantiate(bullet, transform.position +(transform.forward * 2), transform.rotation);
     }
 }

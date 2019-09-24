@@ -30,11 +30,15 @@ public class BulletBehaviour : MonoBehaviour
     {
         if(Physics.SphereCast(transform.position, 0.50f, transform.forward, out bulletHit, 0.3f, interactionLayer))
         {
-            Destroy(gameObject);
-            if(bulletHit.transform.tag == "Enemy")
+            if (bulletHit.transform.tag == "Enemy")
             {
                 bulletHit.transform.gameObject.GetComponent<EnemyScript>().Die();
             }
+            else if (bulletHit.transform.tag == "Player")
+            {
+                bulletHit.transform.gameObject.GetComponent<PlayerController>().TakeDamage();
+            }
+            Destroy(gameObject);
         }
     }
 }

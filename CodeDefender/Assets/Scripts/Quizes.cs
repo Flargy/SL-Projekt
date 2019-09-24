@@ -26,6 +26,9 @@ public class Quizes : MonoBehaviour
     private InputField field1;
     private InputField field2;
     private InputField field3;
+    private GameObject door;
+    private bool openDoor;
+    private GameObject teleporter;
 
     private void Start()
     {
@@ -35,13 +38,15 @@ public class Quizes : MonoBehaviour
     }
 
 
-    public void ActivateQuiz(string correctAnswer1, string correctAnswer2, string correctAnswer3, Sprite questionImg)
+    public void ActivateQuiz(string correctAnswer1, string correctAnswer2, string correctAnswer3, Sprite questionImg, GameObject door, bool open, GameObject teleport)
     {
         player.GetComponent<PlayerController>().FreezePlayer();
         answer1 = correctAnswer1;
         answer2 = correctAnswer2;
         answer3 = correctAnswer3;
         questionImage.GetComponent<Image>().sprite = questionImg;
+        this.door = door;
+        openDoor = open;
 
         textField1.transform.parent.gameObject.SetActive(true);
         textField2.transform.parent.gameObject.SetActive(true);
@@ -50,7 +55,10 @@ public class Quizes : MonoBehaviour
         answerButton.SetActive(true);
         exitButton.SetActive(true);
         
-        
+        if(teleport != null)
+        {
+            teleporter = teleport;
+        }
 
     }
 
@@ -63,6 +71,18 @@ public class Quizes : MonoBehaviour
         if (playerAnswer1 == answer1 && playerAnswer2 == answer2 && playerAnswer3 == answer3)
         {
             Debug.Log("whoopdiefuckingdo you did the thing");
+            if(openDoor == true)
+            {
+                door.SetActive(false);
+                if(teleporter != null)
+                {
+                    teleporter.SetActive(true);
+                }
+            }
+            else
+            {
+                door.SetActive(true);
+            }
         }
         else
         {
@@ -79,6 +99,8 @@ public class Quizes : MonoBehaviour
         playerAnswer1 = null;
         playerAnswer2 = null;
         playerAnswer3 = null;
+        teleporter = null;
+        door = null;
         questionImage.GetComponent<Image>().sprite = null;
 
         textField1.GetComponentInParent<InputField>().text = "";
