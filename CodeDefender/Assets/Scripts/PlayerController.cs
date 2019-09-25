@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private RaycastHit groundHit;
     private Ray cameraRay;
     private int health = 5;
+    private float shotDelay;
+    private float takeDamageDelay;
 
     public LayerMask layer;
     public float movementSpeed;
@@ -42,6 +44,10 @@ public class PlayerController : MonoBehaviour
             MovePlayer();
             LookAtMouse();
             Shoot();
+            if(takeDamageDelay >= 0 && takeDamageDelay <= 0.5f)
+            {
+                takeDamageDelay += Time.deltaTime;
+            }
         }
     }
 
@@ -75,16 +81,28 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && shotDelay >= 0.45f)
+        {
             Instantiate(bullet, shotLocation.position, player.rotation);
+            shotDelay = 0.0f;
+        }
+        if (shotDelay >= 0.0f || shotDelay <= 1.0f)
+            shotDelay += Time.deltaTime;
+        else
+            shotDelay = 0.0f;
+        
     }
 
     public void TakeDamage()
     {
-        health--;
-        if(health <= 0)
+        if (takeDamageDelay >= 0.5f)
         {
-            Respawn();
+            takeDamageDelay = 0.0f;
+            health--;
+            if (health <= 0)
+            {
+                Respawn();
+            }
         }
     }
 

@@ -18,96 +18,120 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private GameObject firePoint5;
 
     private NavMeshAgent agent;
-    private float followDelay = 0;
-    private float attackDelay;
     private bool isDead = false;
+    private float followDelay;
+    private float turnDelay;
     private float attackDuration = 0;
     private float timeAttacked = 1.0f;
     private float attackCooldown = 2.0f;
     private int attackNumber = 3;
+    private int health = 40;
     private float shotDelay = 0;
+    private bool secondPhase = false;
 
     void Start()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
+        agent = transform.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if(timeAttacked > attackDuration && attackCooldown >= 3.0f)
+    { if (isDead == false)
         {
-            attackCooldown = 0;
-            timeAttacked = 0.0f;
-            attackNumber = Random.Range(attackNumber + 1, 3) % 3;
-            Debug.Log(attackNumber);
-            switch (attackNumber)
+            if (timeAttacked > attackDuration && attackCooldown >= 3.0f)
             {
-                case 2:
-                    attackDuration = 3.0f;
-                    break;
-                default:
-                    attackDuration = 2.0f;
-                    break;
-            }
-        }
+                attackCooldown = 0;
+                timeAttacked = 0.0f;
+                attackNumber = Random.Range(attackNumber + 1, 3) % 3;
 
-        if (timeAttacked < attackDuration)
-        {
-            timeAttacked += Time.deltaTime;
-
-            if (shotDelay >= 0.1f)
-            {
-                shotDelay = 0.0f;
                 switch (attackNumber)
                 {
-                    case 0:
-                        ShootForward();
-                        break;
-                    case 1:
-                        SpreadShot();
-                        break;
                     case 2:
-                        ShootAround();
+                        attackDuration = 3.0f;
                         break;
                     default:
+                        attackDuration = 2.0f;
                         break;
+                }
+            }
+
+            if (timeAttacked < attackDuration)
+            {
+                timeAttacked += Time.deltaTime;
+
+                if (shotDelay >= 0.1f)
+                {
+                    shotDelay = 0.0f;
+                    switch (attackNumber)
+                    {
+                        case 0:
+                            ShootForward();
+                            break;
+                        case 1:
+                            SpreadShot();
+                            break;
+                        case 2:
+                            ShootAround();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    shotDelay += Time.deltaTime;
                 }
             }
             else
             {
-                shotDelay += Time.deltaTime;
+                attackCooldown += Time.deltaTime;
             }
-        }
-        else
-        {
-            attackCooldown += Time.deltaTime;
-        }
+
+            if (secondPhase == true)
+            {
+                followDelay += Time.deltaTime;
+                if (followDelay > 0.3f)
+                {
+                    agent.SetDestination(player.transform.position);
+                    followDelay = 0.0f;
+                }
+            }
+
+            turnDelay += Time.deltaTime;
+            if(turnDelay >= 0.1f)
+            {
+                turnDelay = 0.0f;
+                transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+            }
 
 
-
-
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ShootForward();
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ShootAround();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SpreadShot();
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                ShootForward();
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                ShootAround();
+            }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                SpreadShot();
+            }
         }
 
     }
 
     public void Die()
     {
-        isDead = true;
-        agent.isStopped = true;
-        Destroy(gameObject, timeToDestroy);
+        health--;
+        if(health <= 20 && secondPhase == false)
+        {
+            secondPhase = true;
+        }
+        else if(health <= 0 && isDead == false)
+        {
+            isDead = true;
+        }
     }
 
     private bool CheckRemainingDistance(Vector3 destination, float acceptableRange)

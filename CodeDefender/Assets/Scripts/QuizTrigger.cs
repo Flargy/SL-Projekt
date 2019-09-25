@@ -12,13 +12,22 @@ public class QuizTrigger : MonoBehaviour
     [SerializeField] private Sprite picture;
     [SerializeField] private GameObject door;
     [SerializeField] private bool openDoor;
+    [SerializeField] private bool isIfQuestion = false;
     [SerializeField] private GameObject teleporter = null;
+    [SerializeField] private bool boolAnswer1;
+    [SerializeField] private bool boolAnswer2;
+    [SerializeField] private bool boolAnswer3;
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isIfQuestion == false)
         {
             quizHandeler.GetComponent<Quizes>().ActivateQuiz(answer1, answer2, answer3, picture, door, openDoor, teleporter);
+        }
+        else if(other.CompareTag("Player") && isIfQuestion == true)
+        {
+            quizHandeler.GetComponent<Quizes>().ActivateQuiz(boolAnswer1, boolAnswer2, boolAnswer3, picture, door, openDoor, teleporter, answer1, answer2, answer3);
         }
     }
 
