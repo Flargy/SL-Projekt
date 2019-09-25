@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 533502749530175587}
   - component: {fileID: 533502749530175586}
   - component: {fileID: 533502749530175589}
-  - component: {fileID: 533502749530175585}
   - component: {fileID: 533502749530175598}
   m_Layer: 9
   m_Name: Player
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 533502749530175588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 533502750873311786}
   - {fileID: 533502750042631421}
@@ -97,25 +96,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &533502749530175585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533502749530175588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17edd20ff1eb1ef47bbf7488c0d005c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 1
-  movementSpeed: 6
-  bullet: {fileID: 4260514464470028105, guid: e25198c297bfa6b4d8af49bcf4faad49, type: 3}
-  shotLocation: {fileID: 533502750042631421}
-  freezePlayer: 0
 --- !u!54 &533502749530175598
 Rigidbody:
   m_ObjectHideFlags: 0
