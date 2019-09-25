@@ -38,6 +38,10 @@ public class BulletBehaviour : MonoBehaviour
             {
                 bulletHit.transform.gameObject.GetComponent<PlayerController>().TakeDamage();
             }
+            else if (bulletHit.transform.CompareTag("Boss"))
+            {
+                bulletHit.transform.gameObject.GetComponent<EnemyBoss>().Damage();
+            }
             Destroy(gameObject);
         }
     }

@@ -128,7 +128,7 @@ public class Quizes : MonoBehaviour
                         teleporter.SetActive(true);
                     }
                 }
-                else
+                else if(openDoor == false && door != null)
                 {
                     door.SetActive(true);
                 }

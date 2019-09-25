@@ -16,6 +16,7 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private GameObject firePoint3;
     [SerializeField] private GameObject firePoint4;
     [SerializeField] private GameObject firePoint5;
+    [SerializeField] private GameObject postFightQuiz;
 
     private NavMeshAgent agent;
     private bool isDead = false;
@@ -31,7 +32,7 @@ public class EnemyBoss : MonoBehaviour
 
     void Start()
     {
-        agent = transform.GetComponent<NavMeshAgent>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -121,9 +122,10 @@ public class EnemyBoss : MonoBehaviour
 
     }
 
-    public void Die()
+    public void Damage()
     {
         health--;
+        Debug.Log(health);
         if(health <= 20 && secondPhase == false)
         {
             secondPhase = true;
@@ -131,6 +133,13 @@ public class EnemyBoss : MonoBehaviour
         else if(health <= 0 && isDead == false)
         {
             isDead = true;
+            postFightQuiz.SetActive(true);
+            firePoint1.SetActive(false);
+            firePoint2.SetActive(false);
+            firePoint3.SetActive(false);
+            firePoint4.SetActive(false);
+            firePoint5.SetActive(false);
+            agent.isStopped = true;
         }
     }
 
