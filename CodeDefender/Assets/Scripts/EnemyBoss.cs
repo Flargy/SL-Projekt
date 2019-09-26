@@ -10,6 +10,7 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private float timeToDestroy = 0;
     [SerializeField] private bool isRanged = false;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject guns;
     [SerializeField] private GameObject firePointFront;
     [SerializeField] private GameObject firePoint1;
     [SerializeField] private GameObject firePoint2;
@@ -32,6 +33,7 @@ public class EnemyBoss : MonoBehaviour
 
     void Start()
     {
+        guns.SetActive(true);
         agent = gameObject.GetComponent<NavMeshAgent>();
     }
 

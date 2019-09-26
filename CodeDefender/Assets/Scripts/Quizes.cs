@@ -39,9 +39,11 @@ public class Quizes : MonoBehaviour
     private InputField field2;
     private InputField field3;
     private GameObject door;
+    private GameObject secondActiveObject;
     private bool openDoor;
     private GameObject teleporter;
     private bool isIfQuestion = false;
+    private GameObject trigger;
 
 
 
@@ -56,7 +58,7 @@ public class Quizes : MonoBehaviour
     }
 
 
-    public void ActivateQuiz(string correctAnswer1, string correctAnswer2, string correctAnswer3, Sprite questionImg, GameObject door, bool open, GameObject teleport)
+    public void ActivateQuiz(string correctAnswer1, string correctAnswer2, string correctAnswer3, Sprite questionImg, GameObject door, GameObject activationObject2, bool open, GameObject teleport, GameObject triggerZone)
     {
         isIfQuestion = false;
         player.GetComponent<PlayerController>().FreezePlayer();
@@ -66,6 +68,7 @@ public class Quizes : MonoBehaviour
         questionImage.GetComponent<Image>().sprite = questionImg;
         this.door = door;
         openDoor = open;
+        trigger = triggerZone;
 
         textField1.transform.parent.gameObject.SetActive(true);
         textField2.transform.parent.gameObject.SetActive(true);
@@ -73,15 +76,20 @@ public class Quizes : MonoBehaviour
         questionImage.SetActive(true);
         answerButton.SetActive(true);
         exitButton.SetActive(true);
-        
-        if(teleport != null)
+
+        if (activationObject2 != null)
+        {
+            secondActiveObject = activationObject2;
+        }
+
+        if (teleport != null)
         {
             teleporter = teleport;
         }
 
     }
 
-    public void ActivateQuiz(bool firstAnswer, bool secondAnswer, bool thirdAnswer, Sprite questionImg, GameObject door, bool open, GameObject teleport, string answerValue1, string answerValue2, string answerValue3)
+    public void ActivateQuiz(bool firstAnswer, bool secondAnswer, bool thirdAnswer, Sprite questionImg, GameObject door, GameObject activationObject2, bool open, GameObject teleport, string answerValue1, string answerValue2, string answerValue3, GameObject triggerZone)
     {
         isIfQuestion = true;
         player.GetComponent<PlayerController>().FreezePlayer();
@@ -94,6 +102,7 @@ public class Quizes : MonoBehaviour
         boolText1.text = answerValue1;
         boolText2.text = answerValue2;
         boolText3.text = answerValue3;
+        trigger = triggerZone;
 
         boolText1.transform.parent.gameObject.SetActive(true);
         boolText2.transform.parent.gameObject.SetActive(true);
@@ -102,6 +111,10 @@ public class Quizes : MonoBehaviour
         answerButton.SetActive(true);
         exitButton.SetActive(true);
 
+        if(activationObject2 != null)
+        {
+            secondActiveObject = activationObject2;
+        }
 
         if (teleport != null)
         {
@@ -120,9 +133,14 @@ public class Quizes : MonoBehaviour
             if (playerAnswer1 == answer1 && playerAnswer2 == answer2 && playerAnswer3 == answer3)
             {
                 Debug.Log("whoopdiefuckingdo you did the thing");
+                trigger.SetActive(false);
                 if (openDoor == true)
                 {
                     door.SetActive(false);
+                    if (secondActiveObject != null)
+                    {
+                        secondActiveObject.SetActive(!secondActiveObject.activeSelf);
+                    }
                     if (teleporter != null)
                     {
                         teleporter.SetActive(true);
@@ -131,6 +149,7 @@ public class Quizes : MonoBehaviour
                 else if(openDoor == false && door != null)
                 {
                     door.SetActive(true);
+                    
                 }
             }
             else
@@ -147,9 +166,15 @@ public class Quizes : MonoBehaviour
             if(playerBoolAnswer1 == boolAnswer1 && playerBoolAnswer2 == boolAnswer2 && playerBoolAnswer3 == boolAnswer3)
             {
                 Debug.Log("whoopdiefuckingdo you did the thing");
+                trigger.SetActive(false);
+
                 if (openDoor == true)
                 {
                     door.SetActive(false);
+                    if (secondActiveObject != null)
+                    {
+                        secondActiveObject.SetActive(!secondActiveObject.activeSelf);
+                    }
                     if (teleporter != null)
                     {
                         teleporter.SetActive(true);
@@ -158,6 +183,7 @@ public class Quizes : MonoBehaviour
                 else
                 {
                     door.SetActive(true);
+                    
                 }
             }
             else
@@ -180,6 +206,7 @@ public class Quizes : MonoBehaviour
         teleporter = null;
         door = null;
         questionImage.GetComponent<Image>().sprite = null;
+        secondActiveObject = null;
 
         if (isIfQuestion == false)
         {
