@@ -125,7 +125,6 @@ public class EnemyBoss : MonoBehaviour
     public void Damage()
     {
         health--;
-        Debug.Log(health);
         if(health <= 20 && secondPhase == false)
         {
             secondPhase = true;

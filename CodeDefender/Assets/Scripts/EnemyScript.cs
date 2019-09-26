@@ -63,7 +63,7 @@ public class EnemyScript : MonoBehaviour
             {
                 if (canAttack == true)
                 {
-                    transform.LookAt(player.transform.position);
+                    transform.LookAt(new Vector3(player.transform.position.x, transform.position.y,  player.transform.position.x));
                     ShootPlayer();
                     canAttack = false;
                     attackDelay = 0.0f;
