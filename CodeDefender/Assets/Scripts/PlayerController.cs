@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameObject playerCamera;
     private float verticalDirection;
     private float horizontalDirection;
     private Vector3 direction;
@@ -58,7 +59,10 @@ public class PlayerController : MonoBehaviour
 
     private void MovementDirection()
     {
-        direction = new Vector3(horizontalDirection, 0, verticalDirection) * movementSpeed;
+        Vector3 rotate = playerCamera.transform.forward;
+        Vector3 flat = new Vector3(rotate.x, 0, rotate.z);
+
+        direction = Quaternion.LookRotation(flat, Vector3.up) * new Vector3(horizontalDirection, 0, verticalDirection).normalized * movementSpeed;
     }
 
     private void MovePlayer()
