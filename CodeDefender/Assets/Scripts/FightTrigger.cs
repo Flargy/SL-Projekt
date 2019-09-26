@@ -6,6 +6,7 @@ public class FightTrigger : MonoBehaviour
 {
 
     public List<GameObject> enemies;
+    [SerializeField] private GameObject door;
     private bool fightHasStarted = false;
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +38,10 @@ public class FightTrigger : MonoBehaviour
         if(objectToRemove != null)
         {
             enemies.Remove(objectToRemove);
+        }
+        if (enemies.Count.Equals(0) && door != null)
+        {
+            door.SetActive(false);
         }
     }
 }
