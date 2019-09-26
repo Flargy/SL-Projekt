@@ -6,8 +6,8 @@ public class CameraFollowPlayer : MonoBehaviour
 {
     public GameObject player;
 
-    private float distanceFromPlayer = 5f;
-    private float heightOffset = 12.5f;
+    [SerializeField] private float distanceFromPlayer = 5f;
+    [SerializeField] private float heightOffset = 12.5f;
 
     void Update()
     {

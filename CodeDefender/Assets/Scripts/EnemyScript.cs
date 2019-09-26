@@ -23,7 +23,6 @@ public class EnemyScript : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerLocated && isDead == false)
@@ -63,7 +62,7 @@ public class EnemyScript : MonoBehaviour
             {
                 if (canAttack == true)
                 {
-                    transform.LookAt(new Vector3(player.transform.position.x, transform.position.y,  player.transform.position.x));
+                    transform.LookAt(new Vector3(player.transform.position.x, transform.position.y,  player.transform.position.z));
                     ShootPlayer();
                     canAttack = false;
                     attackDelay = 0.0f;
