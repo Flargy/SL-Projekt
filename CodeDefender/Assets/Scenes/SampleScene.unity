@@ -1736,7 +1736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yRotation: 90
-  xDistance: 5
+  xDistance: 6
   zDistance: 0
 --- !u!65 &1749402407
 BoxCollider:
