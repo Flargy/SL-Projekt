@@ -81,6 +81,7 @@ public class Quizes : MonoBehaviour
         {
             secondActiveObject = activationObject2;
         }
+        
 
         if (teleport != null)
         {
@@ -115,6 +116,7 @@ public class Quizes : MonoBehaviour
         {
             secondActiveObject = activationObject2;
         }
+        
 
         if (teleport != null)
         {
@@ -137,20 +139,24 @@ public class Quizes : MonoBehaviour
                 if (openDoor == true)
                 {
                     door.SetActive(false);
-                    if (secondActiveObject != null)
-                    {
-                        secondActiveObject.SetActive(!secondActiveObject.activeSelf);
-                    }
-                    if (teleporter != null)
-                    {
-                        teleporter.SetActive(true);
-                    }
-                }
-                else if(openDoor == false && door != null)
-                {
-                    door.SetActive(true);
+                   
                     
                 }
+                else if (openDoor == false && door != null)
+                {
+                    door.SetActive(true);
+
+                }
+                if (secondActiveObject != null)
+                {
+                    secondActiveObject.SetActive(!secondActiveObject.activeSelf);
+                }
+                if (teleporter != null)
+                {
+                    Debug.Log("teleporter found");
+                    teleporter.SetActive(true);
+                }
+                
             }
             else
             {
@@ -171,20 +177,23 @@ public class Quizes : MonoBehaviour
                 if (openDoor == true)
                 {
                     door.SetActive(false);
-                    if (secondActiveObject != null)
-                    {
-                        secondActiveObject.SetActive(!secondActiveObject.activeSelf);
-                    }
-                    if (teleporter != null)
-                    {
-                        teleporter.SetActive(true);
-                    }
-                }
-                else
-                {
-                    door.SetActive(true);
+                    
                     
                 }
+                if (secondActiveObject != null)
+                {
+                    secondActiveObject.SetActive(!secondActiveObject.activeSelf);
+                }
+                else if (openDoor == false && door != null)
+                {
+                    door.SetActive(true);
+
+                }
+                if (teleporter != null)
+                {
+                    teleporter.SetActive(true);
+                }
+                
             }
             else
             {
