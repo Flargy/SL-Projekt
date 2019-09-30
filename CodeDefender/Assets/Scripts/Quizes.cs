@@ -16,6 +16,8 @@ public class Quizes : MonoBehaviour
     [SerializeField] private GameObject boolTextField1;
     [SerializeField] private GameObject boolTextField2;
     [SerializeField] private GameObject boolTextField3;
+    [SerializeField] private GameObject toggleExplanation;
+    [SerializeField] private GameObject variableExplanation;
     private string answer1;
     private string answer2;
     private string answer3;
@@ -76,6 +78,7 @@ public class Quizes : MonoBehaviour
         questionImage.SetActive(true);
         answerButton.SetActive(true);
         exitButton.SetActive(true);
+        variableExplanation.SetActive(true);
 
         if (activationObject2 != null)
         {
@@ -111,6 +114,7 @@ public class Quizes : MonoBehaviour
         questionImage.SetActive(true);
         answerButton.SetActive(true);
         exitButton.SetActive(true);
+        toggleExplanation.SetActive(true);
 
         if(activationObject2 != null)
         {
@@ -236,6 +240,8 @@ public class Quizes : MonoBehaviour
             boolTextField2.transform.parent.gameObject.SetActive(false);
             boolTextField3.transform.parent.gameObject.SetActive(false);
         }
+        toggleExplanation.SetActive(false);
+        variableExplanation.SetActive(false);
         questionImage.SetActive(false);
         answerButton.SetActive(false);
         exitButton.SetActive(false);

@@ -20,14 +20,16 @@ public class CameraFollowPlayer : MonoBehaviour
     private float lerpedXDistance;
     private float lerpedZDistance;
     private Vector3 lerpVector;
+    private float timeAddition;
 
     void Update()
     {
         if (lerping)
         {
-            transform.rotation = Quaternion.Lerp(oldRotation, newRotation, 0.2f * Time.time);
-            lerpedXDistance = Mathf.Lerp(xDistanceFromPlayer, newXDistance, 0.2f * Time.time);
-            lerpedZDistance = Mathf.Lerp(zDistanceFromPlayer, newZDistance, 0.2f * Time.time);
+            timeAddition += Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(oldRotation, newRotation, 0.5f * timeAddition);
+            lerpedXDistance = Mathf.Lerp(xDistanceFromPlayer, newXDistance, 0.5f * timeAddition);
+            lerpedZDistance = Mathf.Lerp(zDistanceFromPlayer, newZDistance, 0.5f * timeAddition);
             lerpVector = new Vector3(player.transform.position.x - lerpedXDistance, (player.transform.position.y + heightOffset), player.transform.position.z - lerpedZDistance);
             transform.position = lerpVector;
             Debug.Log(lerpedZDistance);
@@ -52,6 +54,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public void ChangeCamera(float rotation, float xDistance, float zDistance)
     {
+        timeAddition = 0.0f;
         lerping = true;
         newRotation = Quaternion.Euler(xRotation, rotation, 0);
         oldRotation = transform.rotation;

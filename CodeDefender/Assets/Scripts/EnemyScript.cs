@@ -77,7 +77,7 @@ public class EnemyScript : MonoBehaviour
         isDead = true;
         agent.isStopped = true;
         fightTrigger.GetComponent<FightTrigger>().RemoveEnemy(gameObject);
-        Destroy(gameObject, timeToDestroy);
+        Destroy(gameObject);
     }
 
     private bool CheckRemainingDistance(Vector3 destination, float acceptableRange)

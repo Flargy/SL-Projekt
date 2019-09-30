@@ -10,6 +10,7 @@ public class CameraChangeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("colliding with camera script");
         if (other.CompareTag("Player"))
         {
             Camera.main.GetComponent<CameraFollowPlayer>().ChangeCamera(yRotation, xDistance, zDistance);
