@@ -24,7 +24,7 @@ public class EnemyBoss : MonoBehaviour
     private float turnDelay;
     private float attackDuration = 0;
     private float timeAttacked = 1.0f;
-    private float attackCooldown = 2.0f;
+    private float attackCooldown = 0.0f;
     private int attackNumber = 3;
     private int health = 40;
     private float shotDelay = 0;

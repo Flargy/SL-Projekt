@@ -46,6 +46,7 @@ public class Quizes : MonoBehaviour
     private GameObject teleporter;
     private bool isIfQuestion = false;
     private GameObject trigger;
+    private bool questionAnsweredCorrectly = false;
 
 
 
@@ -130,78 +131,75 @@ public class Quizes : MonoBehaviour
 
     public void CheckAnswer()
     {
-        if (isIfQuestion == false)
-        {
-            playerAnswer1 = text1.text;
-            playerAnswer2 = text2.text;
-            playerAnswer3 = text3.text;
-
-            if (playerAnswer1 == answer1 && playerAnswer2 == answer2 && playerAnswer3 == answer3)
+        if(questionAnsweredCorrectly == false) {
+            if (isIfQuestion == false)
             {
-                Debug.Log("whoopdiefuckingdo you did the thing");
-                trigger.SetActive(false);
-                if (openDoor == true)
+                playerAnswer1 = text1.text;
+                playerAnswer2 = text2.text;
+                playerAnswer3 = text3.text;
+
+                if (playerAnswer1 == answer1 && playerAnswer2 == answer2 && playerAnswer3 == answer3)
                 {
-                    door.SetActive(false);
-                   
-                    
-                }
-                else if (openDoor == false && door != null)
-                {
-                    door.SetActive(true);
+                    questionAnsweredCorrectly = true;
+                    trigger.SetActive(false);
+                    if (openDoor == true)
+                    {
+                        door.SetActive(false);
+
+
+                    }
+                    else if (openDoor == false && door != null)
+                    {
+                        door.SetActive(true);
+
+                    }
+                    if (secondActiveObject != null)
+                    {
+                        secondActiveObject.SetActive(!secondActiveObject.activeSelf);
+                    }
+                    if (teleporter != null)
+                    {
+                        teleporter.SetActive(true);
+                    }
 
                 }
-                if (secondActiveObject != null)
+                else
                 {
-                    secondActiveObject.SetActive(!secondActiveObject.activeSelf);
                 }
-                if (teleporter != null)
+            }
+            else if (isIfQuestion == true)
+            {
+                playerBoolAnswer1 = boolTextField1.transform.parent.gameObject.GetComponent<Toggle>().isOn;
+                playerBoolAnswer2 = boolTextField2.transform.parent.gameObject.GetComponent<Toggle>().isOn;
+                playerBoolAnswer3 = boolTextField3.transform.parent.gameObject.GetComponent<Toggle>().isOn;
+
+                if (playerBoolAnswer1 == boolAnswer1 && playerBoolAnswer2 == boolAnswer2 && playerBoolAnswer3 == boolAnswer3)
                 {
-                    Debug.Log("teleporter found");
-                    teleporter.SetActive(true);
+                    trigger.SetActive(false);
+                    questionAnsweredCorrectly = true;
+
+                    if (openDoor == true)
+                    {
+                        door.SetActive(false);
+
+
+                    }
+                    if (secondActiveObject != null)
+                    {
+                        secondActiveObject.SetActive(!secondActiveObject.activeSelf);
+                    }
+                    else if (openDoor == false && door != null)
+                    {
+                        door.SetActive(true);
+
+                    }
+                    if (teleporter != null)
+                    {
+                        teleporter.SetActive(true);
+                    }
+
                 }
                 
-            }
-            else
-            {
-                Debug.Log("Well look at you go retard");
-            }
-        }
-        else if(isIfQuestion == true)
-        {
-            playerBoolAnswer1 = boolTextField1.transform.parent.gameObject.GetComponent<Toggle>().isOn;
-            playerBoolAnswer2 = boolTextField2.transform.parent.gameObject.GetComponent<Toggle>().isOn;
-            playerBoolAnswer3 = boolTextField3.transform.parent.gameObject.GetComponent<Toggle>().isOn;
-
-            if(playerBoolAnswer1 == boolAnswer1 && playerBoolAnswer2 == boolAnswer2 && playerBoolAnswer3 == boolAnswer3)
-            {
-                Debug.Log("whoopdiefuckingdo you did the thing");
-                trigger.SetActive(false);
-
-                if (openDoor == true)
-                {
-                    door.SetActive(false);
-                    
-                    
-                }
-                if (secondActiveObject != null)
-                {
-                    secondActiveObject.SetActive(!secondActiveObject.activeSelf);
-                }
-                else if (openDoor == false && door != null)
-                {
-                    door.SetActive(true);
-
-                }
-                if (teleporter != null)
-                {
-                    teleporter.SetActive(true);
-                }
-                
-            }
-            else
-            {
-                Debug.Log("Well look at you go retard");
             }
         
         }
@@ -245,6 +243,7 @@ public class Quizes : MonoBehaviour
         questionImage.SetActive(false);
         answerButton.SetActive(false);
         exitButton.SetActive(false);
+        questionAnsweredCorrectly = false;
 
     }
 }
