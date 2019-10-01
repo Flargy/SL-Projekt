@@ -18,6 +18,8 @@ public class Quizes : MonoBehaviour
     [SerializeField] private GameObject boolTextField3;
     [SerializeField] private GameObject toggleExplanation;
     [SerializeField] private GameObject variableExplanation;
+    [SerializeField] private AudioClip success;
+    [SerializeField] private AudioClip failure;
     private string answer1;
     private string answer2;
     private string answer3;
@@ -47,11 +49,13 @@ public class Quizes : MonoBehaviour
     private bool isIfQuestion = false;
     private GameObject trigger;
     private bool questionAnsweredCorrectly = false;
+    private AudioSource source;
 
 
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         text1 = textField1.GetComponent<Text>();
         text2 = textField2.GetComponent<Text>();
         text3 = textField3.GetComponent<Text>();
@@ -140,6 +144,7 @@ public class Quizes : MonoBehaviour
 
                 if (playerAnswer1 == answer1 && playerAnswer2 == answer2 && playerAnswer3 == answer3)
                 {
+                    source.PlayOneShot(success, 0.1f);
                     questionAnsweredCorrectly = true;
                     trigger.SetActive(false);
                     if (openDoor == true)
@@ -165,6 +170,7 @@ public class Quizes : MonoBehaviour
                 }
                 else
                 {
+                    source.PlayOneShot(failure, 0.1f);
                 }
             }
             else if (isIfQuestion == true)
@@ -175,6 +181,7 @@ public class Quizes : MonoBehaviour
 
                 if (playerBoolAnswer1 == boolAnswer1 && playerBoolAnswer2 == boolAnswer2 && playerBoolAnswer3 == boolAnswer3)
                 {
+                    source.PlayOneShot(success, 0.1f);
                     trigger.SetActive(false);
                     questionAnsweredCorrectly = true;
 
@@ -199,7 +206,11 @@ public class Quizes : MonoBehaviour
                     }
 
                 }
-                
+                else
+                {
+                    source.PlayOneShot(failure, 0.1f);
+                }
+
             }
         
         }
